@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Vista previa - SIG File{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/preview.css') }}?v=5">
+{% endblock %}
+
+{% block header_buttons %}
+  <a href="{{ url_for('index') }}" class="btn btn-outline-light">⬅ Volver a Inicio</a>
+{% endblock %}
+
+{% block content %}
+  <section class="preview-section">
+    <div class="preview-box">
+      <h2>Selecciona las columnas que deseas exportar</h2>
+
+      <form method="POST" action="/export" onsubmit="showSpinner()">
+        <div class="controls-section">
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline-primary btn-sm" id="select-all">
+              <i class="fas fa-check-square"></i> Seleccionar Todo
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="deselect-all">
+              <i class="fas fa-square"></i> Deseleccionar Todo
+            </button>
+            <button type="button" class="btn btn-outline-info btn-sm" id="toggle-columns">
+              <i class="fas fa-eye" id="toggle-icon"></i> Ocultar Columnas
+            </button>
+          </div>
+        </div>
+
+        <div class="columns-container" id="columns-container">
+          <div class="columns-grid">
+            {% for col in headers %}
+              <div class="column-check">
+                <input class="form-check-input column-toggle" type="checkbox"
+                       name="columns" value="{{ col }}"
+                       id="col_{{ loop.index }}" data-col="{{ loop.index0 }}" checked>
+                <label class="form-check-label" for="col_{{ loop.index }}">
+                  {% if col.startswith('Unnamed') %}
+                    Columna {{ loop.index }}
+                  {% else %}
+                    {{ col }}
+                  {% endif %}
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <input type="hidden" name="filename" value="{{ file }}">
+
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-file-export me-2"></i> Exportar a Excel
+        </button>
+
+        <div id="loading-spinner"></div>
+
+        <div class="table-container">
+          <table class="excel-table" id="preview-table">
+            <thead>
+              <tr>
+                <th class="row-header">#</th>
+                {% for col in headers %}
+                  <th data-col="{{ loop.index0 }}">
+                    {% if col.startswith('Unnamed') %}
+                      Col {{ loop.index }}
+                    {% else %}
+                      {{ col }}
+                    {% endif %}
+                  </th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              {% for row in data %}
+                <tr>
+                  <td class="row-header">{{ loop.index }}</td>
+                  {% for col in headers %}
+                    <td data-col="{{ loop.index0 }}">
+                      {% if row[col] is none or row[col] == '' %}
+                        
+                      {% else %}
+                        {{ row[col] }}
+                      {% endif %}
+                    </td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <nav class="pagination-nav">
+          <ul class="pagination" id="pagination"></ul>
+        </nav>
+      </form>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/preview.js') }}?v=5"></script>
+{% endblock %}

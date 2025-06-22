@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}SIG File - Alcaldía de Cartagena{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+  <section class="upload-section animate-fade-in">
+    <div class="upload-box">
+      <h2 class="mb-4">📁 Subir Archivo para Procesar</h2>
+      
+      <form method="POST" enctype="multipart/form-data">
+        <div class="mb-4">
+          <input type="file" class="form-control form-control-lg" 
+                 name="file" accept=".xlsx,.zip,.ram" required>
+          <div class="form-text mt-2">
+            Formatos soportados: Excel (.xlsx), ZIP (.zip), RAM (.ram)
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-success btn-lg w-100">
+          <i class="fas fa-upload me-2"></i>Procesar Archivo
+        </button>
+      </form>
+      
+    </div>
+  </section>
+
+  <div class="modal fade" id="uploadedFilesModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Archivos en el servidor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul id="uploads-list" class="list-group"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
