@@ -3,19 +3,6 @@
 # SIGFILE
 
 Sistema para analizar archivos y exportar seleccionando columnas específicas. Construido con Flask y desplegado en Vercel.
-
-## 📋 Tabla de contenidos
-
-1. [Descripción](#descripción)  
-2. [Funcionalidades](#funcionalidades)  
-3. [Instalación](#instalación)  
-4. [Ejecución](#ejecución)  
-   - [Local](#local)  
-   - [Producción / Vercel](#producción--vercel)  
-5. [Estructura del proyecto](#estructura-del-proyecto)  
-6. [Cómo contribuir](#cómo-contribuir)  
-7. [Licencia](#licencia)  
-
 ---
 
 ## 📝 Descripción
