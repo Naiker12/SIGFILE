@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const columnsContainer = document.getElementById("columns-container");
   const toggleIcon = document.getElementById("toggle-icon");
   
-  const rowsPerPage = 10;
+  const rowsPerPage = 20;
   let currentPage = 1;
   let allRows = [];
   let allMobileCards = [];

@@ -3,6 +3,7 @@
 
 {% block styles %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/preview.css') }}?v=5">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/toast.css') }}?v=1">
 {% endblock %}
 
 {% block header_buttons %}
@@ -14,7 +15,7 @@
     <div class="preview-box">
       <h2>Selecciona las columnas que deseas exportar</h2>
 
-      <form method="POST" action="/export" onsubmit="showSpinner()">
+      <form method="POST" action="/export" onsubmit="return showSpinner()">
         <div class="controls-section">
           <div class="btn-group">
             <button type="button" class="btn btn-outline-primary btn-sm" id="select-all">
@@ -100,5 +101,43 @@
 {% endblock %}
 
 {% block scripts %}
+  <script src="{{ url_for('static', filename='js/toast.js') }}?v=1"></script>
   <script src="{{ url_for('static', filename='js/preview.js') }}?v=5"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      showSuccess(
+        'Archivo Cargado', 
+        'El archivo se ha procesado correctamente y está listo para exportar.',
+        { duration: 4000 }
+      );
+      
+    });
+
+    function showSpinner() {
+      const loadingToast = showLoading(
+        'Exportando Archivo', 
+        'Por favor espere mientras se genera el archivo Excel...',
+        { closable: false }
+      );
+      
+      setTimeout(() => {
+        hideToast(loadingToast);
+        showSuccess(
+          'Exportación Completada', 
+          'El archivo se ha exportado exitosamente.',
+          { duration: 3000 }
+        );
+      }, 2000);
+      
+      return true; 
+    }
+    
+    window.addEventListener('error', function(e) {
+      showError(
+        'Error Inesperado', 
+        'Ha ocurrido un error. Por favor, recarga la página e intenta nuevamente.',
+        { duration: 10000 }
+      );
+    });
+  </script>
 {% endblock %}
