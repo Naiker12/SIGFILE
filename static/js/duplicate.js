@@ -46,25 +46,26 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       setTimeout(() => {
-        confirmToast.innerHTML += `
-          <div class="toast-actions mt-2 text-center">
-            <button class="btn btn-sm btn-success me-2">Sí</button>
-            <button class="btn btn-sm btn-danger">No</button>
-          </div>
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'toast-actions';
+        actionsDiv.innerHTML = `
+          <button class="btn btn-success">Sí</button>
+          <button class="btn btn-danger">No</button>
         `;
 
-        const yesBtn = confirmToast.querySelector(".btn-success");
-        const noBtn = confirmToast.querySelector(".btn-danger");
+        confirmToast.element.appendChild(actionsDiv);
 
-        if (yesBtn && noBtn) {
-          yesBtn.addEventListener("click", () => {
-            hideToast(confirmToast);
-            performDuplication(rowId, 1);
-          });
-          noBtn.addEventListener("click", () => {
-            hideToast(confirmToast);
-          });
-        }
+        const yesBtn = actionsDiv.querySelector(".btn-success");
+        const noBtn = actionsDiv.querySelector(".btn-danger");
+
+        yesBtn.addEventListener("click", () => {
+          hideToast(confirmToast);
+          performDuplication(rowId, 1);
+        });
+        
+        noBtn.addEventListener("click", () => {
+          hideToast(confirmToast);
+        });
       }, 50);
 
       return;
@@ -143,29 +144,27 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     setTimeout(() => {
-      successToast.innerHTML += `
-        <div class="toast-actions mt-2 text-center">
-          <button class="btn btn-sm btn-primary me-2" id="exportWithDuplicates">Exportar con Duplicados</button>
-          <button class="btn btn-sm btn-outline-primary" id="saveToOriginal">Guardar en Original</button>
-        </div>
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'toast-actions';
+      actionsDiv.innerHTML = `
+        <button class="btn btn-primary" id="exportWithDuplicates">Exportar con Duplicados</button>
+        <button class="btn btn-outline-primary" id="saveToOriginal">Guardar en Original</button>
       `;
 
-      const exportBtn = successToast.querySelector("#exportWithDuplicates");
-      const saveBtn = successToast.querySelector("#saveToOriginal");
+      successToast.element.appendChild(actionsDiv);
 
-      if (exportBtn) {
-        exportBtn.addEventListener("click", () => {
-          hideToast(successToast);
-          handleExportWithDuplicates();
-        });
-      }
+      const exportBtn = actionsDiv.querySelector("#exportWithDuplicates");
+      const saveBtn = actionsDiv.querySelector("#saveToOriginal");
 
-      if (saveBtn) {
-        saveBtn.addEventListener("click", () => {
-          hideToast(successToast);
-          handleSaveToOriginal();
-        });
-      }
+      exportBtn.addEventListener("click", () => {
+        hideToast(successToast);
+        handleExportWithDuplicates();
+      });
+
+      saveBtn.addEventListener("click", () => {
+        hideToast(successToast);
+        handleSaveToOriginal();
+      });
     }, 50);
   }
 
