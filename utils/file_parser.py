@@ -5,6 +5,8 @@ import tempfile
 from datetime import datetime
 import io
 import numpy as np
+import hashlib
+import json
 
 def parse_uploaded_file(filepath):
     """Parsea archivos subidos y retorna headers y datos"""
@@ -35,6 +37,9 @@ def parse_excel_file(filepath):
                     row_dict[header] = value
                 else:
                     row_dict[header] = str(value).strip() if str(value).strip() != 'nan' else None
+            
+            # Agregar ID único para cada fila
+            row_dict['_row_id'] = generate_row_id(row_dict)
             data.append(row_dict)
         
         return headers, data
@@ -61,6 +66,8 @@ def parse_zip_metadata(filepath):
                     "tipo": get_file_type(zinfo.filename),
                     "ratio_compresion": calculate_compression_ratio(zinfo.file_size, zinfo.compress_size)
                 }
+                
+                entry['_row_id'] = generate_row_id(entry)
                 metadata.append(entry)
 
                 if zinfo.filename.lower().endswith(".zip"):
@@ -78,6 +85,7 @@ def parse_zip_metadata(filepath):
                                     "tipo": f"ZIP anidado - {get_file_type(nested.filename)}",
                                     "ratio_compresion": calculate_compression_ratio(nested.file_size, nested.compress_size)
                                 }
+                                nested_entry['_row_id'] = generate_row_id(nested_entry)
                                 metadata.append(nested_entry)
                             nested_zip.close()
                     except Exception as e:
@@ -130,7 +138,6 @@ def parse_ram_file(filepath):
                 
             parts = [part.strip().replace('"', '') for part in line.split(best_separator)]
             
-
             while len(parts) < len(headers):
                 parts.append(None)
             parts = parts[:len(headers)]
@@ -144,6 +151,8 @@ def parse_ram_file(filepath):
                 else:
                     row_dict[header] = value
             
+            # Agregar ID único
+            row_dict['_row_id'] = generate_row_id(row_dict)
             data.append(row_dict)
 
         return headers, data
@@ -151,6 +160,77 @@ def parse_ram_file(filepath):
     except Exception as e:
         print(f"Error leyendo archivo RAM: {e}")
         return [], []
+
+def generate_row_id(row_dict):
+    """Genera un ID único para una fila basado en su contenido"""
+    content = json.dumps({k: v for k, v in row_dict.items() if k != '_row_id'}, 
+                        sort_keys=True, default=str)
+    return hashlib.md5(content.encode()).hexdigest()[:12]
+
+def remove_duplicates(data, key_columns=None):
+    """Elimina filas duplicadas basándose en columnas específicas o en todo el contenido"""
+    if not data:
+        return data
+    
+    seen = set()
+    unique_data = []
+    
+    for row in data:
+        if key_columns:
+            key_values = tuple(str(row.get(col, '')) for col in key_columns)
+        else:
+            key_values = row.get('_row_id', generate_row_id(row))
+        
+        if key_values not in seen:
+            seen.add(key_values)
+            unique_data.append(row)
+    
+    return unique_data
+
+def apply_filters(data, filters):
+    """Aplica filtros a los datos"""
+    if not data or not filters:
+        return data
+    
+    filtered_data = []
+    for row in data:
+        include_row = True
+        
+        for column, filter_value in filters.items():
+            if column not in row:
+                continue
+                
+            row_value = str(row[column]).lower() if row[column] is not None else ''
+            filter_value = str(filter_value).lower()
+            
+            if filter_value and filter_value not in row_value:
+                include_row = False
+                break
+        
+        if include_row:
+            filtered_data.append(row)
+    
+    return filtered_data
+
+def save_processed_data(data, filepath):
+    """Guarda los datos procesados en un archivo temporal para persistencia"""
+    try:
+        temp_file = tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json')
+        json.dump(data, temp_file, default=str, indent=2)
+        temp_file.close()
+        return temp_file.name
+    except Exception as e:
+        print(f"Error guardando datos procesados: {e}")
+        return None
+
+def load_processed_data(filepath):
+    """Carga datos procesados desde un archivo temporal"""
+    try:
+        with open(filepath, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error cargando datos procesados: {e}")
+        return []
 
 def format_size(size_bytes):
     """Convierte bytes a formato legible"""
@@ -202,21 +282,31 @@ def calculate_compression_ratio(original_size, compressed_size):
     ratio = ((original_size - compressed_size) / original_size) * 100
     return f"{ratio:.1f}%"
 
-def export_to_excel(data, selected_columns=None):
-    """Exporta datos a Excel con columnas seleccionadas"""
+def export_to_excel(data, selected_columns=None, remove_duplicates_flag=True, filters=None):
+    """Exporta datos a Excel con columnas seleccionadas, eliminación de duplicados y filtros aplicados"""
     try:
         if not data:
             return None
-            
+        if filters:
+            data = apply_filters(data, filters)
+        if remove_duplicates_flag:
+            data = remove_duplicates(data)
+    
         if selected_columns:
             filtered_data = []
             for row in data:
-                filtered_row = {col: row.get(col) for col in selected_columns}
+                filtered_row = {col: row.get(col) for col in selected_columns if col != '_row_id'}
                 filtered_data.append(filtered_row)
             data = filtered_data
+        else:
+            # Remover _row_id de la exportación
+            data = [{k: v for k, v in row.items() if k != '_row_id'} for row in data]
+        
+        if not data:
+            print("No hay datos para exportar después de aplicar filtros")
+            return None
         
         df = pd.DataFrame(data)
-        
         df = df.fillna('')
         
         temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".xlsx")
@@ -227,7 +317,6 @@ def export_to_excel(data, selected_columns=None):
             workbook = writer.book
             worksheet = writer.sheets['Datos']
             
-
             from openpyxl.styles import Font, PatternFill, Alignment
             
             header_font = Font(bold=True, color="FFFFFF")
@@ -240,7 +329,6 @@ def export_to_excel(data, selected_columns=None):
                 cell.fill = header_fill
                 cell.alignment = header_alignment
                 
-   
                 column_letter = cell.column_letter
                 max_length = max(len(str(column_title)), 15)
                 worksheet.column_dimensions[column_letter].width = min(max_length, 50)
@@ -250,3 +338,23 @@ def export_to_excel(data, selected_columns=None):
     except Exception as e:
         print(f"Error exportando a Excel: {e}")
         return None
+
+def get_data_summary(data):
+    """Genera un resumen de los datos"""
+    if not data:
+        return {}
+    
+    summary = {
+        'total_rows': len(data),
+        'total_columns': len(data[0].keys()) if data else 0,
+        'duplicates': len(data) - len(remove_duplicates(data)),
+        'empty_values': 0
+    }
+    
+    # Contar valores vacíos
+    for row in data:
+        for value in row.values():
+            if value is None or value == '':
+                summary['empty_values'] += 1
+    
+    return summary

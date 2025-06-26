@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleColumnsBtn = document.getElementById("toggle-columns");
   const columnsContainer = document.getElementById("columns-container");
   const toggleIcon = document.getElementById("toggle-icon");
-  
-  const rowsPerPage = 20;
+
+  const rowsPerPage = 10;
   let currentPage = 1;
   let allRows = [];
   let allMobileCards = [];
-  
+
   if (tableBody) {
     allRows = Array.from(tableBody.querySelectorAll("tr"));
   }
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updatePaginationButtons(activePage) {
     if (!pagination) return;
-    
+
     pagination.innerHTML = "";
     const totalItems = Math.max(allRows.length, allMobileCards.length);
     const totalPages = Math.ceil(totalItems / rowsPerPage);
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const maxVisiblePages = 5;
     let startPage = Math.max(1, activePage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-    
+
     if (endPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.classList.add("page-item");
       if (i === activePage) li.classList.add("active");
-      
+
       const a = document.createElement("a");
       a.className = "page-link";
       a.href = "#";
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentPage = i;
         displayPage(i);
       });
-      
+
       li.appendChild(a);
       pagination.appendChild(li);
     }
@@ -141,9 +141,54 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function initializeHorizontalScroll() {
+    const tableContainer = document.querySelector(".table-scroll");
+    if (tableContainer && window.innerWidth <= 768) {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      tableContainer.addEventListener("mousedown", (e) => {
+        isDown = true;
+        startX = e.pageX - tableContainer.offsetLeft;
+        scrollLeft = tableContainer.scrollLeft;
+      });
+
+      tableContainer.addEventListener("mouseleave", () => {
+        isDown = false;
+      });
+
+      tableContainer.addEventListener("mouseup", () => {
+        isDown = false;
+      });
+
+      tableContainer.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - tableContainer.offsetLeft;
+        const walk = (x - startX) * 2;
+        tableContainer.scrollLeft = scrollLeft - walk;
+      });
+
+      let startTouchX = 0;
+      let startScrollLeft = 0;
+
+      tableContainer.addEventListener("touchstart", (e) => {
+        startTouchX = e.touches[0].clientX;
+        startScrollLeft = tableContainer.scrollLeft;
+      });
+
+      tableContainer.addEventListener("touchmove", (e) => {
+        const touchX = e.touches[0].clientX;
+        const diffX = startTouchX - touchX;
+        tableContainer.scrollLeft = startScrollLeft + diffX;
+      });
+    }
+  }
+
   if (selectAllBtn) {
     selectAllBtn.addEventListener("click", () => {
-      checkboxes.forEach(cb => {
+      checkboxes.forEach((cb) => {
         cb.checked = true;
       });
       updateColumnVisibility();
@@ -152,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (deselectAllBtn) {
     deselectAllBtn.addEventListener("click", () => {
-      checkboxes.forEach(cb => {
+      checkboxes.forEach((cb) => {
         cb.checked = false;
       });
       updateColumnVisibility();
@@ -182,56 +227,18 @@ document.addEventListener("DOMContentLoaded", () => {
     updateColumnVisibility();
   }
 
-  function initializeHorizontalScroll() {
-    const tableContainer = document.querySelector('.table-scroll');
-    if (tableContainer && window.innerWidth <= 768) {
-      let isDown = false;
-      let startX;
-      let scrollLeft;
-
-      tableContainer.addEventListener('mousedown', (e) => {
-        isDown = true;
-        startX = e.pageX - tableContainer.offsetLeft;
-        scrollLeft = tableContainer.scrollLeft;
-      });
-
-      tableContainer.addEventListener('mouseleave', () => {
-        isDown = false;
-      });
-
-      tableContainer.addEventListener('mouseup', () => {
-        isDown = false;
-      });
-
-      tableContainer.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - tableContainer.offsetLeft;
-        const walk = (x - startX) * 2;
-        tableContainer.scrollLeft = scrollLeft - walk;
-      });
-
-      let startTouchX = 0;
-      let startScrollLeft = 0;
-
-      tableContainer.addEventListener('touchstart', (e) => {
-        startTouchX = e.touches[0].clientX;
-        startScrollLeft = tableContainer.scrollLeft;
-      });
-
-      tableContainer.addEventListener('touchmove', (e) => {
-        const touchX = e.touches[0].clientX;
-        const diffX = startTouchX - touchX;
-        tableContainer.scrollLeft = startScrollLeft + diffX;
-      });
-    }
-  }
-
   initializeHorizontalScroll();
 
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     initializeHorizontalScroll();
   });
+
+  window.previewModule = {
+    allRows,
+    currentPage,
+    displayPage,
+    updateColumnVisibility
+  };
 });
 
 function showSpinner() {
@@ -239,7 +246,7 @@ function showSpinner() {
   if (spinner) {
     spinner.style.display = "block";
   }
-  
+
   const exportBtn = document.querySelector('button[type="submit"]');
   if (exportBtn) {
     exportBtn.disabled = true;

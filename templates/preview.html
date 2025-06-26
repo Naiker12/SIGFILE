@@ -8,6 +8,7 @@
 
 {% block header_buttons %}
   <a href="{{ url_for('index') }}" class="btn btn-outline-light">⬅ Volver a Inicio</a>
+  <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#duplicateModal">Duplicar Fila</button>
 {% endblock %}
 
 {% block content %}
@@ -63,7 +64,7 @@
               <tr>
                 <th class="row-header">#</th>
                 {% for col in headers %}
-                  <th data-col="{{ loop.index0 }}">
+                  <th data-col="{{ loop.index0 }}" data-header="{{ col }}">
                     {% if col.startswith('Unnamed') %}
                       Col {{ loop.index }}
                     {% else %}
@@ -75,7 +76,7 @@
             </thead>
             <tbody id="table-body">
               {% for row in data %}
-                <tr>
+                <tr data-row-id="{{ loop.index }}">
                   <td class="row-header">{{ loop.index }}</td>
                   {% for col in headers %}
                     <td data-col="{{ loop.index0 }}">
@@ -98,11 +99,42 @@
       </form>
     </div>
   </section>
+
+   <div class="modal fade" id="duplicateModal" tabindex="-1" aria-labelledby="duplicateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="duplicateModalLabel">Duplicar Fila</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="duplicateForm">
+            <div class="mb-3">
+              <label for="rowId" class="form-label">ID de Fila a Duplicar</label>
+              <select class="form-control" id="rowId" required>
+                <option value="">Seleccionar fila...</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="duplicateCount" class="form-label">Número de Copias</label>
+              <input type="number" class="form-control" id="duplicateCount" min="1" max="50" value="1" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="confirmDuplicate">Duplicar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/toast.js') }}?v=1"></script>
-  <script src="{{ url_for('static', filename='js/preview.js') }}?v=5"></script>
+  <script src="{{ url_for('static', filename='js/preview.js') }}?v=7"></script>
+  <script src="{{ url_for('static', filename='js/validation.js') }}?v=1"></script>
+  <script src="{{ url_for('static', filename='js/duplicate.js') }}?v=1"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       showSuccess(
@@ -110,7 +142,6 @@
         'El archivo se ha procesado correctamente y está listo para exportar.',
         { duration: 4000 }
       );
-      
     });
 
     function showSpinner() {

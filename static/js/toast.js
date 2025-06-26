@@ -112,7 +112,10 @@ class SimpleToast {
   }
 }
 
+
+
 const toast = new SimpleToast();
+
 
 window.showSuccess = (title, message, duration) => toast.success(title, message, duration);
 window.showError = (title, message, duration) => toast.error(title, message, duration);
