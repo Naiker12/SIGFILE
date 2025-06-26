@@ -6,413 +6,150 @@
 {% endblock %}
 
 {% block content %}
- <body>
-    <div class="container">
+<div class="container">
+    <header class="header">
+        <div class="header-content">
+            <h1><i class="fas fa-book"></i> SIG File</h1>
+            <p>Sistema de Gestión de Archivos Territoriales - Alcaldía de Cartagena</p>
+        </div>
+    </header>
 
-        <header class="header">
-            <div class="header-content">
-                <h1><i class="fas fa-book"></i> SIG File</h1>
-                <p>Sistema de Gestión de Archivos Territoriales - Alcaldía de Cartagena</p>
+    <nav class="nav-tabs">
+        <a href="#overview" class="nav-tab active" data-section="overview">
+            <i class="fas fa-info-circle"></i> Resumen
+        </a>
+        <a href="#features" class="nav-tab" data-section="features">
+            <i class="fas fa-star"></i> Características
+        </a>
+        <a href="#formats" class="nav-tab" data-section="formats">
+            <i class="fas fa-file"></i> Formatos
+        </a>
+        <a href="#usage" class="nav-tab" data-section="usage">
+            <i class="fas fa-play-circle"></i> Guía de Uso
+        </a>
+    </nav>
+
+    <section id="overview" class="section active">
+        <div class="card">
+            <h3><i class="fas fa-lightbulb"></i> ¿Qué es SIG File?</h3>
+            <p>SIG File es un sistema de gestión de archivos territoriales para la Alcaldía de Cartagena. Convierte archivos complejos (.zip, .ram, .xlsx) en Excel organizados automáticamente.</p>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h4>Subir Archivo</h4>
+                <p>Carga tu archivo desde tu computadora</p>
             </div>
-        </header>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h4>Procesamiento</h4>
+                <p>El sistema organiza los datos automáticamente</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h4>Descargar</h4>
+                <p>Obtén un Excel limpio y organizado</p>
+            </div>
+        </div>
+    </section>
 
 
-        <nav class="nav-tabs">
-            <a href="#overview" class="nav-tab active" data-section="overview">
-                <i class="fas fa-info-circle"></i>
-                Resumen
-            </a>
-            <a href="#features" class="nav-tab" data-section="features">
-                <i class="fas fa-star"></i>
-                Características
-            </a>
-            <a href="#formats" class="nav-tab" data-section="formats">
-                <i class="fas fa-file"></i>
-                Formatos
-            </a>
-            <a href="#usage" class="nav-tab" data-section="usage">
-                <i class="fas fa-play-circle"></i>
-                Guía de Uso
-            </a>
-            <a href="#technical" class="nav-tab" data-section="technical">
-                <i class="fas fa-code"></i>
-                Técnico
-            </a>
-        </nav>
-
-        <!-- Overview Section -->
-        <section id="overview" class="section active">
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon primary">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <h3>¿Qué es SIG File?</h3>
-                    </div>
-                    <p>SIG File es un sistema innovador de gestión de archivos territoriales diseñado específicamente para la Alcaldía de Cartagena.</p>
-                    <p><strong>Objetivo principal:</strong> Simplificar el trabajo manual y optimizar el procesamiento de grandes volúmenes de datos territoriales.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon secondary">
-                            <i class="fas fa-target"></i>
-                        </div>
-                        <h3>Propósito Principal</h3>
-                    </div>
-                    <p>Convertir archivos complejos (.zip, .ram, .xlsx) en <strong>Excel resumidos y organizados</strong>.</p>
-                    <p>Elimina la necesidad de copiar nombres y datos uno por uno manualmente, ahorrando horas de trabajo.</p>
-                </div>
+    <section id="features" class="section">
+        <div class="cards-grid">
+            <div class="card">
+                <h3><i class="fas fa-file-excel"></i> Procesamiento Excel</h3>
+                <p>Extrae columnas específicas de archivos Excel grandes</p>
+                <ul>
+                    <li>Selección de columnas</li>
+                    <li>Múltiples hojas</li>
+                    <li>Filtrado automático</li>
+                </ul>
             </div>
 
             <div class="card">
-                <h3><i class="fas fa-project-diagram"></i> Flujo de Trabajo</h3>
-                <div class="steps-container">
-                    <div class="step-card">
-                        <div class="step-number">1</div>
-                        <h4><i class="fas fa-upload"></i> Subir Archivo</h4>
-                        <p>Cargas tu archivo (.zip, .ram, .xlsx) desde tu computadora de forma segura.</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">2</div>
-                        <h4><i class="fas fa-cogs"></i> Procesamiento</h4>
-                        <p>El sistema extrae y organiza los datos automáticamente en segundos.</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">3</div>
-                        <h4><i class="fas fa-download"></i> Descargar</h4>
-                        <p>Obtienes un Excel limpio, organizado y listo para usar.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="section">
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon secondary">
-                            <i class="fas fa-file-excel"></i>
-                        </div>
-                        <h3>Procesamiento Excel</h3>
-                    </div>
-                    <p>Selecciona específicamente las columnas que necesitas de archivos Excel grandes.</p>
-                    <ul class="card-list">
-                        <li><i class="fas fa-check"></i> Extracción selectiva de columnas</li>
-                        <li><i class="fas fa-check"></i> Filtrado automático de datos</li>
-                        <li><i class="fas fa-check"></i> Múltiples hojas de cálculo</li>
-                        <li><i class="fas fa-check"></i> Exportación optimizada</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon accent">
-                            <i class="fas fa-file-archive"></i>
-                        </div>
-                        <h3>Extracción ZIP</h3>
-                    </div>
-                    <p>Obtiene automáticamente los metadatos de archivos comprimidos.</p>
-                    <ul class="card-list">
-                        <li><i class="fas fa-check"></i> Nombres de archivos</li>
-                        <li><i class="fas fa-check"></i> Tamaños y fechas</li>
-                        <li><i class="fas fa-check"></i> Estructura de carpetas</li>
-                        <li><i class="fas fa-check"></i> Inventarios automáticos</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon primary">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <h3>Archivos RAM</h3>
-                    </div>
-                    <p>Procesa archivos de datos territoriales especializados.</p>
-                    <ul class="card-list">
-                        <li><i class="fas fa-check"></i> Datos geográficos</li>
-                        <li><i class="fas fa-check"></i> Coordenadas exactas</li>
-                        <li><i class="fas fa-check"></i> Referencias catastrales</li>
-                        <li><i class="fas fa-check"></i> Información territorial</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon secondary">
-                            <i class="fas fa-magic"></i>
-                        </div>
-                        <h3>Automatización Total</h3>
-                    </div>
-                    <p>Elimina el trabajo manual repetitivo completamente.</p>
-                    <ul class="card-list">
-                        <li><i class="fas fa-check"></i> Procesamiento en segundos</li>
-                        <li><i class="fas fa-check"></i> Sin errores humanos</li>
-                        <li><i class="fas fa-check"></i> Resultados consistentes</li>
-                        <li><i class="fas fa-check"></i> Ahorro de tiempo masivo</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Formats Section -->
-        <section id="formats" class="section">
-            <div class="format-card">
-                <div class="format-header">
-                    <div class="format-icon excel">
-                        <i class="fas fa-file-excel"></i>
-                    </div>
-                    <div class="format-info">
-                        <h4>Archivos Excel (.xlsx)</h4>
-                        <span class="format-status">Completamente Soportado</span>
-                    </div>
-                </div>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h4><i class="fas fa-cogs"></i> Capacidades</h4>
-                        <ul class="card-list">
-                            <li><i class="fas fa-check"></i> Lectura de múltiples hojas</li>
-                            <li><i class="fas fa-check"></i> Selección específica de columnas</li>
-                            <li><i class="fas fa-check"></i> Filtrado avanzado de datos</li>
-                            <li><i class="fas fa-check"></i> Exportación optimizada</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <h4><i class="fas fa-lightbulb"></i> Casos de Uso</h4>
-                        <ul class="card-list">
-                            <li><i class="fas fa-arrow-right"></i> Listados de propiedades</li>
-                            <li><i class="fas fa-arrow-right"></i> Inventarios territoriales</li>
-                            <li><i class="fas fa-arrow-right"></i> Bases de datos catastrales</li>
-                            <li><i class="fas fa-arrow-right"></i> Reportes administrativos</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="format-card">
-                <div class="format-header">
-                    <div class="format-icon zip">
-                        <i class="fas fa-file-archive"></i>
-                    </div>
-                    <div class="format-info">
-                        <h4>Archivos ZIP (.zip)</h4>
-                        <span class="format-status">Completamente Soportado</span>
-                    </div>
-                </div>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h4><i class="fas fa-cogs"></i> Capacidades</h4>
-                        <ul class="card-list">
-                            <li><i class="fas fa-check"></i> Extracción sin descomprimir</li>
-                            <li><i class="fas fa-check"></i> Análisis de estructura</li>
-                            <li><i class="fas fa-check"></i> Metadatos completos</li>
-                            <li><i class="fas fa-check"></i> Generación de inventarios</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <h4><i class="fas fa-lightbulb"></i> Casos de Uso</h4>
-                        <ul class="card-list">
-                            <li><i class="fas fa-arrow-right"></i> Archivos de planos</li>
-                            <li><i class="fas fa-arrow-right"></i> Documentos territoriales</li>
-                            <li><i class="fas fa-arrow-right"></i> Respaldos organizacionales</li>
-                            <li><i class="fas fa-arrow-right"></i> Colecciones de archivos</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="format-card">
-                <div class="format-header">
-                    <div class="format-icon database">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="format-info">
-                        <h4>Archivos RAM (.ram)</h4>
-                        <span class="format-status">Completamente Soportado</span>
-                    </div>
-                </div>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h4><i class="fas fa-cogs"></i> Capacidades</h4>
-                        <ul class="card-list">
-                            <li><i class="fas fa-check"></i> Lectura de datos geográficos</li>
-                            <li><i class="fas fa-check"></i> Extracción de coordenadas</li>
-                            <li><i class="fas fa-check"></i> Propiedades territoriales</li>
-                            <li><i class="fas fa-check"></i> Conversión a formato tabular</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <h4><i class="fas fa-lightbulb"></i> Casos de Uso</h4>
-                        <ul class="card-list">
-                            <li><i class="fas fa-arrow-right"></i> Datos catastrales</li>
-                            <li><i class="fas fa-arrow-right"></i> Información geográfica</li>
-                            <li><i class="fas fa-arrow-right"></i> Mapas territoriales</li>
-                            <li><i class="fas fa-arrow-right"></i> Sistemas de información</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Usage Section -->
-        <section id="usage" class="section">
-            <div class="steps-container">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h4><i class="fas fa-upload"></i> Subir Archivo</h4>
-                    <p>Selecciona el archivo que deseas procesar desde tu computadora. El sistema acepta archivos .xlsx, .zip y .ram.</p>
-                    <div style="background: #f1f5f9; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                        <strong>💡 Tip:</strong> Asegúrate de que el archivo no esté corrupto y sea menor a 100MB.
-                    </div>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h4><i class="fas fa-cogs"></i> Procesamiento</h4>
-                    <p>El sistema analiza automáticamente el archivo y extrae la información relevante según el tipo.</p>
-                    <div style="background: #fef3c7; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                        <strong>⏱️ Tiempo:</strong> El procesamiento toma entre 5-30 segundos dependiendo del tamaño.
-                    </div>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h4><i class="fas fa-download"></i> Descargar</h4>
-                    <p>Una vez procesado, podrás descargar el archivo Excel resultante con los datos organizados.</p>
-                    <div style="background: #dcfce7; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                        <strong>✅ Resultado:</strong> Excel optimizado con solo la información que necesitas.
-                    </div>
-                </div>
-            </div>
-
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon secondary">
-                            <i class="fas fa-file-excel"></i>
-                        </div>
-                        <h3>Ejemplo Excel</h3>
-                    </div>
-                    <p><strong>Problema:</strong> Tienes un Excel con 500 propiedades y 30 columnas, pero solo necesitas "Código Catastral" y "Dirección".</p>
-                    <p><strong>Solución:</strong> SIG File extrae automáticamente solo esas 2 columnas, creando un archivo limpio y manejable en segundos.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon accent">
-                            <i class="fas fa-file-archive"></i>
-                        </div>
-                        <h3>Ejemplo ZIP</h3>
-                    </div>
-                    <p><strong>Problema:</strong> Tienes un ZIP con 200 planos y necesitas un inventario completo de todos los archivos.</p>
-                    <p><strong>Solución:</strong> SIG File genera automáticamente un Excel con nombres, tamaños, fechas y tipos de todos los archivos contenidos.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Technical Section -->
-        <section id="technical" class="section">
-            <div class="tech-grid">
-                <div class="tech-card">
-                    <div class="tech-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h4>Tecnologías</h4>
-                    <ul class="tech-list">
-                        <li><span class="tech-tag">Python</span> Backend principal</li>
-                        <li><span class="tech-tag">Flask</span> Framework web</li>
-                        <li><span class="tech-tag">Pandas</span> Procesamiento de datos</li>
-                        <li><span class="tech-tag">Bootstrap</span> Frontend responsivo</li>
-                    </ul>
-                </div>
-
-                <div class="tech-card">
-                    <div class="tech-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h4>Seguridad</h4>
-                    <ul class="card-list">
-                        <li><i class="fas fa-check"></i> Validación de archivos</li>
-                        <li><i class="fas fa-check"></i> Límites de tamaño</li>
-                        <li><i class="fas fa-check"></i> Procesamiento local</li>
-                        <li><i class="fas fa-check"></i> Datos temporales</li>
-                    </ul>
-                </div>
-
-                <div class="tech-card">
-                    <div class="tech-icon">
-                        <i class="fas fa-desktop"></i>
-                    </div>
-                    <h4>Requisitos</h4>
-                    <ul class="card-list">
-                        <li><i class="fas fa-globe"></i> Chrome 90+, Firefox 88+</li>
-                        <li><i class="fas fa-wifi"></i> Internet estable</li>
-                        <li><i class="fas fa-code"></i> JavaScript habilitado</li>
-                        <li><i class="fas fa-mobile"></i> Responsive design</li>
-                    </ul>
-                </div>
+                <h3><i class="fas fa-file-archive"></i> Extracción ZIP</h3>
+                <p>Genera inventarios automáticos de archivos comprimidos</p>
+                <ul>
+                    <li>Nombres de archivos</li>
+                    <li>Tamaños y fechas</li>
+                    <li>Estructura de carpetas</li>
+                </ul>
             </div>
 
             <div class="card">
-                <h3><i class="fas fa-tachometer-alt"></i> Estadísticas de Rendimiento</h3>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-number">< 30s</span>
-                        <span class="stat-label">Tiempo de procesamiento promedio</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">100MB</span>
-                        <span class="stat-label">Tamaño máximo de archivo</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">99.9%</span>
-                        <span class="stat-label">Precisión en extracción de datos</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">Disponibilidad del servicio</span>
-                    </div>
-                </div>
+                <h3><i class="fas fa-database"></i> Archivos RAM</h3>
+                <p>Procesa datos territoriales especializados</p>
+                <ul>
+                    <li>Datos geográficos</li>
+                    <li>Coordenadas exactas</li>
+                    <li>Referencias catastrales</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="formats" class="section">
+        <div class="format-card">
+            <h3><i class="fas fa-file-excel"></i> Excel (.xlsx)</h3>
+            <p>Lectura de múltiples hojas, selección de columnas específicas y exportación optimizada.</p>
+        </div>
+
+        <div class="format-card">
+            <h3><i class="fas fa-file-archive"></i> ZIP (.zip)</h3>
+            <p>Extracción sin descomprimir, análisis de estructura y generación de inventarios.</p>
+        </div>
+
+        <div class="format-card">
+            <h3><i class="fas fa-database"></i> RAM (.ram)</h3>
+            <p>Lectura de datos geográficos, extracción de coordenadas y conversión tabular.</p>
+        </div>
+    </section>
+
+    <section id="usage" class="section">
+        <div class="card">
+            <h3><i class="fas fa-upload"></i> Instrucciones de Uso</h3>
+            <ol>
+                <li><strong>Subir:</strong> Selecciona tu archivo (.xlsx, .zip, .ram)</li>
+                <li><strong>Procesar:</strong> El sistema analiza automáticamente (5-30 segundos)</li>
+                <li><strong>Descargar:</strong> Obtén tu Excel organizado</li>
+            </ol>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <h4>Ejemplo Excel</h4>
+                <p>Excel con 500 propiedades → Solo columnas necesarias en segundos</p>
             </div>
 
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon primary">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <h3>Optimización</h3>
-                    </div>
-                    <p>Sistema optimizado para manejar grandes volúmenes de datos de manera eficiente.</p>
-                    <ul class="card-list">
-                        <li><i class="fas fa-check"></i> Procesamiento en memoria</li>
-                        <li><i class="fas fa-check"></i> Algoritmos optimizados</li>
-                        <li><i class="fas fa-check"></i> Compresión inteligente</li>
-                        <li><i class="fas fa-check"></i> Cache eficiente</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon secondary">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3>Mantenimiento</h3>
-                    </div>
-                    <p>Sistema con arquitectura robusta y mantenimiento automatizado.</p>
-                    <ul class="card-list">
-                        <li><i class="fas fa-check"></i> Monitoreo automático</li>
-                        <li><i class="fas fa-check"></i> Backups regulares</li>
-                        <li><i class="fas fa-check"></i> Actualizaciones continuas</li>
-                        <li><i class="fas fa-check"></i> Soporte técnico</li>
-                    </ul>
-                </div>
+            <div class="card">
+                <h4>Ejemplo ZIP</h4>
+                <p>ZIP con 200 archivos → Inventario completo automático</p>
             </div>
-        </section>
-    </div>
-</body>
+        </div>
+    </section>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.nav-tab');
+    const sections = document.querySelectorAll('.section');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+      
+            this.classList.add('active');
+            
+            const sectionId = this.getAttribute('data-section');
+            document.getElementById(sectionId).classList.add('active');
+        });
+    });
+});
+</script>
 {% endblock %}
 
 {% block scripts %}
