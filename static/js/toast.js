@@ -2,7 +2,7 @@ class SolidToast {
   constructor() {
     this.container = null;
     this.toasts = new Map();
-    this.defaultDuration = 4000;
+    this.defaultDuration = 2000;
     this.position = 'top-right';
     this.init();
   }
@@ -101,57 +101,72 @@ class SolidToast {
       
       .toast-actions {
         display: flex;
-        gap: 8px;
+        gap: 12px;
         justify-content: center;
-        margin-top: 8px;
+        margin-top: 12px;
       }
       
       .toast-actions button {
-        padding: 6px 12px;
+        padding: 10px 20px;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
-        font-size: 12px;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: 600;
         transition: all 0.2s ease;
+        min-width: 80px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
       
       .toast-actions .btn-success {
         background: #22c55e;
         color: white;
+        box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
       }
       
       .toast-actions .btn-success:hover {
         background: #16a34a;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(34, 197, 94, 0.4);
       }
       
       .toast-actions .btn-danger {
         background: #ef4444;
         color: white;
+        box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
       }
       
       .toast-actions .btn-danger:hover {
         background: #dc2626;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
       }
       
       .toast-actions .btn-primary {
         background: #3b82f6;
         color: white;
+        box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
       }
       
       .toast-actions .btn-primary:hover {
         background: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
       }
       
       .toast-actions .btn-outline-primary {
         background: transparent;
         color: #3b82f6;
-        border: 1px solid #3b82f6;
+        border: 2px solid #3b82f6;
+        box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
       }
       
       .toast-actions .btn-outline-primary:hover {
         background: #3b82f6;
         color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
       }
       
       .solid-toast.success {

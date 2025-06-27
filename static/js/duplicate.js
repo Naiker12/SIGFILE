@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const confirmToast = showInfo(
         "Confirmación",
         "Solo se duplicará una vez. ¿Deseas continuar?",
-        0
+        { duration: 0 }
       );
 
       setTimeout(() => {
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const successToast = showSuccess(
       "Éxito",
       `Se duplicaron ${count} fila(s) justo debajo de la fila ${originalRowId}. Total de filas: ${totalRows}`,
-      0
+      { duration: 0 }
     );
 
     setTimeout(() => {
